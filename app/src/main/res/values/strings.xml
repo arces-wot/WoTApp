@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">WoTApp</string>
     <string name="action_settings">Settings</string>
+    <string name="qrDetectorFailure">Error in setting up QR Detector</string>
+    <string name="scanned_nothing">Found nothing to scan!</string>
+    <string name="failed_loading_image">Failed to load image!</string>
 </resources>

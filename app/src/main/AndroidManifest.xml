@@ -19,6 +19,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <provider
+            android:authorities="unibo.arces.wot.wotapp.fileprovider"
+            android:name="android.support.v4.content.FileProvider"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/paths" />
+        </provider>
+        <meta-data
+            android:name="com.google.android.gms.vision.DEPENDENCIES"
+            android:value="barcode"/>
     </application>
 
 </manifest>
