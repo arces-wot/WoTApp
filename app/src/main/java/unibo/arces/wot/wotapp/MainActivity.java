@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -75,8 +74,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void takeQRPicture() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        File photo = new File(Environment.getExternalStorageDirectory(), "picture.jpg");
-        imageUri = FileProvider.getUriForFile(getApplicationContext(),BuildConfig.APPLICATION_ID + ".fileprovider", photo);
+        File photo = new File(getExternalFilesDir(null), "picture.jpg");
+        imageUri = FileProvider.getUriForFile(this,BuildConfig.APPLICATION_ID + ".fileprovider", photo);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         startActivityForResult(intent, PHOTO_REQUEST);
     }
@@ -84,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        View view = getWindow().getDecorView().getRootView();
         if ((requestCode==PHOTO_REQUEST) && (resultCode==RESULT_OK)) {
             Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
             mediaScanIntent.setData(imageUri);
@@ -96,13 +96,13 @@ public class MainActivity extends AppCompatActivity {
                     if (barcodes.size()>0) {
                         for (int index = 0; index < barcodes.size(); index++) {
                             Barcode code = barcodes.valueAt(index);
-                            Snackbar.make(getCurrentFocus(), "Got value: " + code.displayValue, Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(view, "Got value: " + code.displayValue, Snackbar.LENGTH_LONG).show();
                         }
                     }
-                    else Snackbar.make(getCurrentFocus(), R.string.scanned_nothing, Snackbar.LENGTH_LONG).show();
+                    else Snackbar.make(view, R.string.scanned_nothing, Snackbar.LENGTH_LONG).show();
                 }
             } catch (FileNotFoundException fne) {
-                Snackbar.make(getCurrentFocus(), R.string.failed_loading_image, Snackbar.LENGTH_LONG).show();
+                Snackbar.make(view, R.string.failed_loading_image, Snackbar.LENGTH_LONG).show();
             }
         }
     }
