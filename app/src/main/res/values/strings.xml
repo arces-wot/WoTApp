@@ -4,4 +4,5 @@
     <string name="qrDetectorFailure">Error in setting up QR Detector</string>
     <string name="scanned_nothing">Found nothing to scan!</string>
     <string name="failed_loading_image">Failed to load image!</string>
+    <string name="events">Events</string>
 </resources>
